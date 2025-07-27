@@ -129,6 +129,14 @@ const products = [
 
 const productInCart = [];
 
+let users = [
+    {
+        name: "admin",
+        email: "admin@example.com",
+        password: "123456",
+    },
+];
+
 const productsContainer = document.getElementById("productsContainer");
 const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("searchInput");
@@ -136,7 +144,7 @@ const searchForm = document.querySelector('form[role="search"]');
 
 let currentFilter = "all";
 let currentSearchTerm = "";
-let currentUser = null;
+let currentUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
 
 document.addEventListener("DOMContentLoaded", function () {
     renderProducts(products);
@@ -207,10 +215,18 @@ function logout() {
     userDropdown.classList.remove("show");
 
     showNotification("Logged out successfully!", "info");
+
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("orderHistory");
 }
 
 function loginUser(userData) {
-    currentUser = userData;
+    currentUser = {
+        name: userData.name,
+        email: userData.email,
+    };
+    localStorage.setItem("loggedInUser", JSON.stringify(currentUser));
 
     const authButtons = document.getElementById("authButtons");
     const userSection = document.getElementById("userSection");
@@ -327,7 +343,6 @@ function validateSignupForm() {
     const confirmPassword = document
         .getElementById("confirmPassword")
         .value.trim();
-    const agreeTerms = document.getElementById("agreeTerms").checked;
     let isValid = true;
 
     clearAllErrors("signupForm");
@@ -388,15 +403,6 @@ function validateSignupForm() {
             "confirmPassword",
             "confirmPasswordError",
             "Passwords do not match"
-        );
-        isValid = false;
-    }
-
-    if (!agreeTerms) {
-        showFieldError(
-            "agreeTerms",
-            "agreeTermsError",
-            "You must agree to the terms and conditions"
         );
         isValid = false;
     }
@@ -548,12 +554,20 @@ function setupEventListeners() {
                 const email = document
                     .getElementById("loginEmail")
                     .value.trim();
-                const name = email.split("@")[0];
+                const password = document
+                    .getElementById("loginPassword")
+                    .value.trim();
 
-                setTimeout(() => {
-                    loginUser({ name: name, email: email });
+                const matchedUser = users.find(
+                    (user) => user.email === email && user.password === password
+                );
+
+                if (matchedUser) {
+                    loginUser(matchedUser);
                     this.reset();
-                }, 500);
+                } else {
+                    showNotification("Invalid email or password", "danger");
+                }
             }
         });
 
@@ -568,11 +582,22 @@ function setupEventListeners() {
                 const email = document
                     .getElementById("signupEmail")
                     .value.trim();
+                const password = document
+                    .getElementById("signupPassword")
+                    .value.trim();
 
-                setTimeout(() => {
-                    loginUser({ name: name, email: email });
-                    this.reset();
-                }, 500);
+                const emailExists = users.some((user) => user.email === email);
+
+                if (emailExists) {
+                    showNotification("Email already registered", "warning");
+                    return;
+                }
+
+                const newUser = { name, email, password };
+                users.push(newUser);
+                localStorage.setItem("users", JSON.stringify(users));
+                loginUser(newUser);
+                this.reset();
             }
         });
 
@@ -682,7 +707,15 @@ function addToCart(productId) {
     const product = products.find((p) => p.id === productId);
     if (product) {
         showNotification(`${product.name} added to cart!`, "success");
-        productInCart.push(product);
+
+        // Lấy danh sách hiện tại trong localStorage (nếu có)
+        const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Thêm sản phẩm vào danh sách
+        currentCart.push(product);
+
+        // Lưu lại vào localStorage
+        localStorage.setItem("cart", JSON.stringify(currentCart));
     }
 }
 
@@ -692,7 +725,8 @@ function showNotification(message, type = "info") {
     notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
     notification.style.cssText = `
                     top: 20px;
-                    right: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
                     z-index: 9999;
                     min-width: 300px;
                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
