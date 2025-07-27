@@ -595,7 +595,6 @@ function setupEventListeners() {
 
                 const newUser = { name, email, password };
                 users.push(newUser);
-                localStorage.setItem("users", JSON.stringify(users));
                 loginUser(newUser);
                 this.reset();
             }
