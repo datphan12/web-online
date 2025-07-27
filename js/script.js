@@ -129,13 +129,15 @@ const products = [
 
 const productInCart = [];
 
-let users = [
+const defaultUsers = [
     {
         name: "admin",
         email: "admin@example.com",
         password: "123456",
     },
 ];
+
+let users = JSON.parse(localStorage.getItem("users")) || defaultUsers;
 
 const productsContainer = document.getElementById("productsContainer");
 const filterButtons = document.querySelectorAll(".filter-btn");
@@ -595,6 +597,7 @@ function setupEventListeners() {
 
                 const newUser = { name, email, password };
                 users.push(newUser);
+                localStorage.setItem("users", JSON.stringify(users));
                 loginUser(newUser);
                 this.reset();
             }
