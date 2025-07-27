@@ -4,6 +4,7 @@ const registeredUsers = [
         name: "Nguyễn Văn A",
         email: "admin@example.com",
         password: "123456",
+        avatar: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
     },
 ];
 
@@ -226,3 +227,5 @@ document.querySelectorAll(".form-control").forEach((input) => {
         }
     });
 });
+
+// Hiển thị avatar
