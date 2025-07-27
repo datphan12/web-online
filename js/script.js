@@ -19,7 +19,7 @@ const products = [
         brand: "iphone",
         price: 799,
         originalPrice: 899,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "A16 Bionic Chip",
             "48MP Main Camera",
@@ -33,7 +33,7 @@ const products = [
         brand: "samsung",
         price: 1199,
         originalPrice: 1299,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Snapdragon 8 Gen 3",
             "200MP Camera",
@@ -47,7 +47,7 @@ const products = [
         brand: "samsung",
         price: 799,
         originalPrice: 899,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Snapdragon 8 Gen 3",
             "50MP Triple Camera",
@@ -61,7 +61,7 @@ const products = [
         brand: "xiaomi",
         price: 899,
         originalPrice: 999,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Snapdragon 8 Gen 3",
             "Leica Camera System",
@@ -75,7 +75,7 @@ const products = [
         brand: "xiaomi",
         price: 649,
         originalPrice: 749,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Snapdragon 8 Gen 3",
             "50MP Leica Camera",
@@ -89,7 +89,7 @@ const products = [
         brand: "iphone",
         price: 999,
         originalPrice: 1099,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "A16 Bionic Chip",
             "Pro Camera System",
@@ -103,7 +103,7 @@ const products = [
         brand: "samsung",
         price: 1599,
         originalPrice: 1799,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Foldable Design",
             "Snapdragon 8 Gen 2",
@@ -117,7 +117,7 @@ const products = [
         brand: "xiaomi",
         price: 299,
         originalPrice: 399,
-        image: "fas fa-mobile-alt",
+        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
         features: [
             "Snapdragon 7s Gen 2",
             "200MP Camera",
@@ -127,23 +127,21 @@ const products = [
     },
 ];
 
-// DOM elements
+const productInCart = [];
+
 const productsContainer = document.getElementById("productsContainer");
 const filterButtons = document.querySelectorAll(".filter-btn");
 const searchInput = document.getElementById("searchInput");
 const searchForm = document.querySelector('form[role="search"]');
 
-// State
 let currentFilter = "all";
 let currentSearchTerm = "";
 let currentUser = null;
 
-// Initialize the app
 document.addEventListener("DOMContentLoaded", function () {
     renderProducts(products);
     setupEventListeners();
 
-    // Ensure proper initial state
     const authButtons = document.getElementById("authButtons");
     const userSection = document.getElementById("userSection");
 
@@ -158,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     checkUserSession();
 });
 
-// Authentication Functions
 function showLoginModal() {
     const loginModal = new bootstrap.Modal(
         document.getElementById("loginModal")
@@ -201,7 +198,6 @@ function toggleUserDropdown() {
 function logout() {
     currentUser = null;
 
-    // Show auth buttons
     const authButtons = document.getElementById("authButtons");
     const userSection = document.getElementById("userSection");
     const userDropdown = document.getElementById("userDropdown");
@@ -216,7 +212,6 @@ function logout() {
 function loginUser(userData) {
     currentUser = userData;
 
-    // Hide auth buttons and show user section
     const authButtons = document.getElementById("authButtons");
     const userSection = document.getElementById("userSection");
 
@@ -227,7 +222,6 @@ function loginUser(userData) {
         "userName"
     ).textContent = `Hello, ${userData.name}!`;
 
-    // Hide modals
     const loginModal = bootstrap.Modal.getInstance(
         document.getElementById("loginModal")
     );
@@ -242,8 +236,6 @@ function loginUser(userData) {
 }
 
 function checkUserSession() {
-    // In a real app, you would check for saved session/token
-    // For demo purposes, we'll just ensure proper state
     if (currentUser) {
         const authButtons = document.getElementById("authButtons");
         const userSection = document.getElementById("userSection");
@@ -256,7 +248,6 @@ function checkUserSession() {
     }
 }
 
-// Form Validation Functions
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -434,13 +425,9 @@ function renderProducts(productsToRender) {
                         product.brand
                     }">
                         <div class="card product-card h-100">
-                            <div class="product-image">
-                                ${
-                                    product.image.startsWith("http")
-                                        ? `<img src="${product.image}" alt="${product.name}">`
-                                        : `<i class="${product.image}"></i>`
-                                }
-                            </div>
+                         
+                            <img src="${product.image}" alt="image">
+                                      
                             <div class="card-body d-flex flex-column">
                                 <div class="product-brand">${getBrandDisplayName(
                                     product.brand
@@ -481,21 +468,8 @@ function renderProducts(productsToRender) {
         .join("");
 
     productsContainer.innerHTML = productsHTML;
-
-    // Add entrance animation
-    const cards = productsContainer.querySelectorAll(".product-card");
-    cards.forEach((card, index) => {
-        card.style.opacity = "0";
-        card.style.transform = "translateY(20px)";
-        setTimeout(() => {
-            card.style.transition = "all 0.6s ease";
-            card.style.opacity = "1";
-            card.style.transform = "translateY(0)";
-        }, index * 100);
-    });
 }
 
-// Get brand display name
 function getBrandDisplayName(brand) {
     const brandNames = {
         iphone: "Apple",
@@ -545,14 +519,10 @@ function applyFiltersAndSearch() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Filter buttons
     filterButtons.forEach((button) => {
         button.addEventListener("click", function () {
-            // Remove active class from all buttons
             filterButtons.forEach((btn) => btn.classList.remove("active"));
-            // Add active class to clicked button
             this.classList.add("active");
-            // Filter products
             filterProducts(this.dataset.filter);
         });
     });
@@ -578,9 +548,8 @@ function setupEventListeners() {
                 const email = document
                     .getElementById("loginEmail")
                     .value.trim();
-                const name = email.split("@")[0]; // Simple name extraction for demo
+                const name = email.split("@")[0];
 
-                // Simulate login process
                 setTimeout(() => {
                     loginUser({ name: name, email: email });
                     this.reset();
@@ -600,7 +569,6 @@ function setupEventListeners() {
                     .getElementById("signupEmail")
                     .value.trim();
 
-                // Simulate signup process
                 setTimeout(() => {
                     loginUser({ name: name, email: email });
                     this.reset();
@@ -608,7 +576,6 @@ function setupEventListeners() {
             }
         });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", function (e) {
         const userDropdown = document.getElementById("userDropdown");
         const userInfo = document.querySelector(".user-info");
@@ -714,14 +681,13 @@ function setupEventListeners() {
 function addToCart(productId) {
     const product = products.find((p) => p.id === productId);
     if (product) {
-        // Simulate adding to cart
         showNotification(`${product.name} added to cart!`, "success");
+        productInCart.push(product);
     }
 }
 
 // Notification system
 function showNotification(message, type = "info") {
-    // Create notification element
     const notification = document.createElement("div");
     notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
     notification.style.cssText = `
@@ -739,20 +705,9 @@ function showNotification(message, type = "info") {
 
     document.body.appendChild(notification);
 
-    // Auto remove after 5 seconds
     setTimeout(() => {
         if (notification.parentNode) {
             notification.remove();
         }
     }, 5000);
 }
-
-// Handle window resize for responsive behavior
-window.addEventListener("resize", function () {
-    // You can add responsive behavior here if needed
-    if (window.innerWidth < 768) {
-        // Mobile specific adjustments
-        const userDropdown = document.getElementById("userDropdown");
-        userDropdown.classList.remove("show");
-    }
-});
