@@ -745,3 +745,49 @@ function showNotification(message, type = "info") {
         }
     }, 5000);
 }
+
+function showProfileModal() {
+    if (!currentUser) return;
+
+    document.getElementById("profileUsername").value = currentUser.name;
+    document.getElementById("profileEmail").value = currentUser.email;
+    document.getElementById("profilePassword").value = "";
+
+    const profileModal = new bootstrap.Modal(
+        document.getElementById("profileModal")
+    );
+    profileModal.show();
+}
+
+document.getElementById("profileForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const newName = document.getElementById("profileUsername").value.trim();
+    const newPass = document.getElementById("profilePassword").value.trim();
+
+    if (!validateName(newName)) {
+        showNotification("Username must be at least 2 characters", "warning");
+        return;
+    }
+
+    // ✅ Tìm và cập nhật trong biến `users`
+    const userIndex = users.findIndex((u) => u.email === currentUser.email);
+    if (userIndex === -1) {
+        showNotification("User not found", "danger");
+        return;
+    }
+
+    users[userIndex].name = newName;
+    if (newPass.length >= 6) {
+        users[userIndex].password = newPass;
+    }
+
+    // ✅ Cập nhật currentUser và lưu lại vào localStorage
+    currentUser.name = newName;
+    localStorage.setItem("loggedInUser", JSON.stringify(currentUser));
+    document.getElementById("userName").textContent = `Hello, ${newName}!`;
+
+    // ✅ Ẩn modal & thông báo
+    bootstrap.Modal.getInstance(document.getElementById("profileModal")).hide();
+    showNotification("Profile updated successfully!", "success");
+});
