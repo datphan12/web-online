@@ -53,7 +53,13 @@
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a
+                                    class="nav-link"
+                                    href="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#contactModal"
+                                    >Contact</a
+                                >
                             </li>
                         </ul>
 
@@ -312,6 +318,51 @@
                                     >Login here</a
                                 >
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact modal -->
+        <div
+            class="modal fade"
+            id="contactModal"
+            tabindex="-1"
+            aria-labelledby="contactModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center p-4">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title w-100" id="contactModalLabel">
+                            <i class="fas fa-envelope me-2"></i>Contact Us
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Phone:</strong> 0123 456 789</p>
+                        <p><strong>Email:</strong> contact@phonehub.com</p>
+                        <div
+                            class="d-flex justify-content-center gap-3 mt-3 fs-4 gap-4"
+                        >
+                            <a
+                                href="https://facebook.com"
+                                class="text-primary"
+                                target="_blank"
+                                ><i class="fab fa-facebook-f"></i
+                            ></a>
+                            <a
+                                href="https://youtube.com"
+                                class="text-danger"
+                                target="_blank"
+                                ><i class="fab fa-youtube"></i
+                            ></a>
                         </div>
                     </div>
                 </div>
