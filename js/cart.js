@@ -241,6 +241,8 @@ function confirmOrder() {
     productInCart = [];
     saveCartToLocal();
 
+    renderCartItems();
+
     // Đóng modal và thông báo
     bootstrap.Modal.getInstance(document.getElementById("billModal")).hide();
     showNotification(
@@ -249,7 +251,7 @@ function confirmOrder() {
     );
 
     // Chuyển về trang chủ
-    setTimeout(() => (window.location.href = "index.html"), 2000);
+    // setTimeout(() => (window.location.href = "index.html"), 2000);
 }
 
 function showNotification(message, type = "info") {
