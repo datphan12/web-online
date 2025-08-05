@@ -230,27 +230,27 @@ function confirmOrder() {
     order.tax = order.subtotal * 0.1;
     order.total = order.subtotal + order.shipping + order.tax;
 
-    // ✅ Lưu vào localStorage (mảng lịch sử)
+    //  Save to localStorage (history array)
     const orderHistory = JSON.parse(
         localStorage.getItem("orderHistory") || "[]"
     );
     orderHistory.push(order);
     localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
 
-    // ✅ Xóa giỏ hàng
+    //  Clear cart
     productInCart = [];
     saveCartToLocal();
 
     renderCartItems();
 
-    // Đóng modal và thông báo
+    // Close modal and notification
     bootstrap.Modal.getInstance(document.getElementById("billModal")).hide();
     showNotification(
         "Order confirmed successfully! Thank you for your purchase.",
         "success"
     );
 
-    // Chuyển về trang chủ
+    // Go back to home page
     // setTimeout(() => (window.location.href = "index.html"), 2000);
 }
 

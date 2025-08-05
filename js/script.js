@@ -5,7 +5,7 @@ const products = [
         brand: "iphone",
         price: 1199,
         originalPrice: 1299,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/iphone-15-pro-max_7__1.webp",
         features: [
             "A17 Pro Chip",
             "48MP Camera System",
@@ -15,11 +15,11 @@ const products = [
     },
     {
         id: 2,
-        name: "iPhone 15",
+        name: "iPhone 14 Plus",
         brand: "iphone",
         price: 799,
         originalPrice: 899,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/14 plus.jpg",
         features: [
             "A16 Bionic Chip",
             "48MP Main Camera",
@@ -33,7 +33,7 @@ const products = [
         brand: "samsung",
         price: 1199,
         originalPrice: 1299,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/samsung24ultra.jpg",
         features: [
             "Snapdragon 8 Gen 3",
             "200MP Camera",
@@ -47,7 +47,7 @@ const products = [
         brand: "samsung",
         price: 799,
         originalPrice: 899,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/samsung s24.jpg",
         features: [
             "Snapdragon 8 Gen 3",
             "50MP Triple Camera",
@@ -61,7 +61,7 @@ const products = [
         brand: "xiaomi",
         price: 899,
         originalPrice: 999,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/mi-14-ultra-avt.jpg",
         features: [
             "Snapdragon 8 Gen 3",
             "Leica Camera System",
@@ -75,7 +75,7 @@ const products = [
         brand: "xiaomi",
         price: 649,
         originalPrice: 749,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/xiaomi14_.jpg",
         features: [
             "Snapdragon 8 Gen 3",
             "50MP Leica Camera",
@@ -89,7 +89,7 @@ const products = [
         brand: "iphone",
         price: 999,
         originalPrice: 1099,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/IPHONE14PRO-1.webp",
         features: [
             "A16 Bionic Chip",
             "Pro Camera System",
@@ -103,7 +103,7 @@ const products = [
         brand: "samsung",
         price: 1599,
         originalPrice: 1799,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/samsung-z-fold5_3__1.webp",
         features: [
             "Foldable Design",
             "Snapdragon 8 Gen 2",
@@ -117,7 +117,7 @@ const products = [
         brand: "xiaomi",
         price: 299,
         originalPrice: 399,
-        image: "https://res.cloudinary.com/eureka-uni/image/upload/v1753093776/eureka-uni/qfzkni8fzzfefrvxstuf.png",
+        image: "../assets/redmi note 13 pro.png",
         features: [
             "Snapdragon 7s Gen 2",
             "200MP Camera",
@@ -126,7 +126,6 @@ const products = [
         ],
     },
 ];
-
 const productInCart = [];
 
 const defaultUsers = [
@@ -772,7 +771,7 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
         return;
     }
 
-    // ✅ Tìm và cập nhật trong biến `users`
+    //  Find and update in variable `users`
     const userIndex = users.findIndex((u) => u.email === currentUser.email);
     if (userIndex === -1) {
         showNotification("User not found", "danger");
@@ -784,12 +783,12 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
         users[userIndex].password = newPass;
     }
 
-    // ✅ Cập nhật currentUser và lưu lại vào localStorage
+    //  Update currentUser and save to localStorage
     currentUser.name = newName;
     localStorage.setItem("loggedInUser", JSON.stringify(currentUser));
     document.getElementById("userName").textContent = `Hello, ${newName}!`;
 
-    // ✅ Ẩn modal & thông báo
+    //  Hide modal & notification
     bootstrap.Modal.getInstance(document.getElementById("profileModal")).hide();
     showNotification("Profile updated successfully!", "success");
 });
